@@ -1,0 +1,17 @@
+settings:
+  start_at: 14-10-2022
+  work_start_hour: 8
+  work_end_hour: 16
+
+tasks:
+  1:
+    duration: 5
+    description: "Need to buy some things"
+  2:
+    duration: 2
+    description: "Go to dentist"
+  3:
+    duration: 2
+    description: "Cook a meal"
+    prerequirements:
+      - 1

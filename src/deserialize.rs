@@ -1,13 +1,12 @@
 use serde::{Deserialize, Serialize};
 use serde_yaml;
 
-use std::{collections::HashMap, io};
+use std::{collections::HashMap, error::Error, fs::File};
 
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
-
 pub struct YamlSchema {
     pub settings: Settings,
-    pub tasks: HashMap<usize, Job>,
+    pub tasks: HashMap<usize, JobNode>,
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
@@ -18,12 +17,13 @@ pub struct Settings {
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
-pub struct Job {
+pub struct JobNode {
     pub duration: usize,
     pub description: String,
-    pub prerequirements: Option<Vec<usize>>,
+    pub next: Option<Vec<usize>>,
 }
 
-pub fn deserialize_yaml(reader: impl io::Read) -> YamlSchema {
-    serde_yaml::from_reader(reader).unwrap()
+pub fn deserialize_yaml(path: String) -> Result<YamlSchema, Box<dyn Error>> {
+    let reader = File::open(path)?;
+    Ok(serde_yaml::from_reader(reader).unwrap())
 }

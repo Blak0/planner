@@ -1,27 +1,16 @@
-#![allow(warnings)]
-
 use std::error::Error;
 
-use std::fs::File;
-
 mod deserialize;
-mod graph;
+mod graph_topology;
 mod task_management;
-mod topological_sort;
+mod types;
 use crate::deserialize::{deserialize_yaml, YamlSchema};
 
-
-
 fn main() -> Result<(), Box<dyn Error>> {
-    let yaml = File::open("test_plan2.yaml")?;
+    let values: YamlSchema = deserialize_yaml("yaml_tests/test_plan2.yaml".to_string())?;
 
-    // let values: YamlSchema = deserialize_yaml(yaml);
+    let lined_up_tasks = graph_topology::topological_sort_jobs(values.tasks);
 
-    // println!("{:#?}", &values);
-
-    // let lined_up_tasks = task_management::topological_sort_tasks(values.tasks);
-    // let priority_sorted = task_management::sort_by_priority_descending(lined_up_tasks);
-
-    // println!("{:#?}", lined_up_tasks);
+    println!("{:#?}", lined_up_tasks);
     Ok(())
 }

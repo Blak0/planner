@@ -1,0 +1,36 @@
+settings:
+  start_at: 14-10-2022
+  work_start_hour: 8
+  work_end_hour: 16
+
+tasks:
+  1:
+    duration: 1
+    description: "Start"
+    next:
+      - 2
+      - 3
+  2:
+    duration: 1
+    description: "2"
+    next:
+      - 4
+      - 5
+  3:
+    duration: 1
+    description: "3"
+    next:
+      - 4
+  4:
+    duration: 1
+    description: "D"
+    next:
+      - 5
+  5:
+    duration: 1
+    description: "Finish"
+    next:
+      - 6
+  6:
+    duration: 1
+    description: "Stop"

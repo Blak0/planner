@@ -9,3 +9,4 @@ edition = "2021"
 serde_yaml = "0.9"
 serde = { version = "1.0.145", features = ["derive"] }
 itertools = "0.10.5"
+petgraph = "0.6.2"

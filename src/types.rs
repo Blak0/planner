@@ -1,0 +1,5 @@
+#[derive(PartialEq, Debug, Clone)]
+pub struct Job {
+    pub duration: usize,
+    pub description: String,
+}

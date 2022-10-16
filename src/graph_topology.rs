@@ -24,14 +24,14 @@ impl BidirectionalGraph {
             let mut prevs = vec![];
 
             for (job_idx, job_entry) in &data {
-                if job_entry.next.clone().unwrap_or(vec![]).contains(&idx) {
+                if job_entry.next.clone().unwrap_or_default().contains(idx) {
                     prevs.push(*job_idx);
                 }
             }
 
             graph.data.push(BidirectionalJob {
                 id: *idx,
-                prevs: prevs,
+                prevs,
                 value: job.clone(),
             });
         }
@@ -52,7 +52,7 @@ impl BidirectionalGraph {
 
                     result.push(some_prev);
                 }
-                None if rest.len() == 0 => break,
+                None if rest.is_empty() => break,
                 None => return Err("Graph contains cycles."),
             }
         }
@@ -84,15 +84,14 @@ impl BidirectionalGraph {
             for node in &mut rest {
                 let new_prevs = node
                     .prevs
-                    .iter()
-                    .map(|val| *val)
+                    .iter().copied()
                     .filter(|prev| prev != &p.id)
                     .collect();
                 node.prevs = new_prevs;
             }
         }
 
-        return (first_no_prev, rest);
+        (first_no_prev, rest)
     }
 }
 
